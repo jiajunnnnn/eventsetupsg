@@ -321,25 +321,25 @@
   <p class="sec-sub">From branded LED bars at FMCG roadshows to large display panels at corporate activations — here's what we deliver.</p>
   <div class="video-grid">
     <div class="video-item">
-      <video autoplay muted loop playsinline preload="auto">
+      <video class="lazy-vid" muted loop playsinline preload="none">
         <source src="assets/videos/LED1.mp4" type="video/mp4">
       </video>
       <div class="vid-label">LED Bar Setup</div>
     </div>
     <div class="video-item">
-      <video autoplay muted loop playsinline preload="auto">
+      <video class="lazy-vid" muted loop playsinline preload="none">
         <source src="assets/videos/LED2.mp4" type="video/mp4">
       </video>
       <div class="vid-label">LED Display Panel</div>
     </div>
     <div class="video-item">
-      <video autoplay muted loop playsinline preload="auto">
+      <video class="lazy-vid" muted loop playsinline preload="none">
         <source src="assets/videos/LED3.mp4" type="video/mp4">
       </video>
       <div class="vid-label">Outdoor LED Screen</div>
     </div>
     <div class="video-item">
-      <video autoplay muted loop playsinline preload="auto">
+      <video class="lazy-vid" muted loop playsinline preload="none">
         <source src="assets/videos/LED4.mp4" type="video/mp4">
       </video>
       <div class="vid-label">Counter LED Setup</div>
@@ -637,5 +637,20 @@
 <span class="wa-text">WhatsApp Us Now</span>
 </a>
 
+<script>
+  /* Showcase videos: only download and play when scrolled into view, pause when off-screen */
+  (function () {
+    var vids = document.querySelectorAll('video.lazy-vid');
+    if (!('IntersectionObserver' in window)) { vids.forEach(function (v) { v.preload = 'auto'; v.play().catch(function () {}); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        var v = e.target;
+        if (e.isIntersecting) { v.preload = 'auto'; v.play().catch(function () {}); }
+        else { v.pause(); }
+      });
+    }, { rootMargin: '200px 0px' });
+    vids.forEach(function (v) { io.observe(v); });
+  })();
+</script>
 </body>
 </html>
