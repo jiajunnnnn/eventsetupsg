@@ -613,6 +613,7 @@
       </div>
       <button type="submit" class="qf-submit" id="qfSubmit">Get a Quote</button>
       <div class="qf-note">We reply fast. No spam, ever.</div>
+      <div id="qf-error">Sorry, that didn't send. Please WhatsApp us at <a href="https://wa.me/6597532059" style="color:#c00;font-weight:700;">+65 9753 2059</a>.</div>
     </form>
     <div class="qf-success" id="qfSuccess">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
@@ -639,9 +640,16 @@
       var service = document.getElementById('qf-service').value;
       var details = document.getElementById('qf-details').value.trim();
 
+      // The Sheet script only keeps name/phone/service/details/page/time,
+      // so email + company go inside "details" to make sure they're kept.
+      var fullDetails = [
+        company ? 'Company: ' + company : '',
+        email ? 'Email: ' + email : '',
+        details
+      ].filter(Boolean).join(' | ');
       var payload = {
-        name: name, phone: phone, email: email, company: company,
-        service: service, details: details,
+        name: name, phone: phone,
+        service: service, details: fullDetails,
         page: window.location.href, time: new Date().toISOString()
       };
 

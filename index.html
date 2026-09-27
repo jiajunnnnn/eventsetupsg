@@ -1275,7 +1275,7 @@
         ✓ No obligation &nbsp;&nbsp; ✓ Same-day response &nbsp;&nbsp; ✓ Clear itemised quote
       </p>
       <div class="form-success" id="form-success">
-        ✓ Opening WhatsApp — your brief is pre-filled and ready to send. We will respond shortly.
+        ✓ Got it — your enquiry has been sent to our team. WhatsApp is opening with your brief too; tap send there for the fastest reply.
       </div>
     </form>
   </div>
@@ -1452,9 +1452,14 @@
     if (!isOpen) item.classList.add('open');
   }
 
-  /* ── Contact form (WhatsApp submit) ── */
+  /* ── Contact form: save the lead first, then open WhatsApp ── */
+  // Same Google Sheet + email handler the three service pages use.
+  var LEAD_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyE3IJuEMj_pBYoS6Y8jOFBWt023mvwSLD3HTaJ9XgcEqlrSkHERxFpacUaN2UREVvs-Q/exec';
+  var formSent = false; // stops double-clicks sending (and counting) the same lead twice
+
   function handleFormSubmit(e) {
     e.preventDefault();
+    if (formSent) return;
     const name = document.getElementById('f-name');
     const phone = document.getElementById('f-phone');
     const service = document.getElementById('f-service');
@@ -1466,22 +1471,47 @@
       if (!el.value.trim()) { el.classList.add('error'); valid = false; }
     });
     if (!valid) { name.value.trim() ? (phone.value.trim() ? service.focus() : phone.focus()) : name.focus(); return; }
+    formSent = true;
+
+    // 1. Save the lead to the Google Sheet (+ email to the team).
+    //    The Sheet script only keeps name/phone/service/details/page/time,
+    //    so the email address goes inside "details" to make sure it's kept.
+    const details = [
+      email.value.trim() ? 'Email: ' + email.value.trim() : '',
+      msg.value.trim()
+    ].filter(Boolean).join(' | ');
+    const payload = {
+      name: name.value.trim(), phone: phone.value.trim(),
+      service: service.value, details: details,
+      page: window.location.href, time: new Date().toISOString()
+    };
+    fetch(LEAD_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      keepalive: true, // finishes sending even if the visitor switches to WhatsApp
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    }).then(function () {
+      // 2. Only now tell Google Ads a lead came in.
+      trackConversion('form');
+    }).catch(function () { /* network failed: no conversion counted */ });
+
+    // 3. Open WhatsApp with the brief pre-filled (must happen right away,
+    //    or the browser's pop-up blocker stops it).
     const text = [
       'Hi EventSetupSG! I would like to enquire about your services.',
       '',
-      'Name: ' + name.value.trim(),
-      'Phone: ' + phone.value.trim(),
+      'Name: ' + payload.name,
+      'Phone: ' + payload.phone,
       email.value.trim() ? 'Email: ' + email.value.trim() : '',
-      'Service: ' + service.value,
+      'Service: ' + payload.service,
       msg.value.trim() ? 'Message: ' + msg.value.trim() : ''
     ].filter(Boolean).join('\n');
     const btn = document.getElementById('form-btn');
     btn.disabled = true;
-    btn.textContent = 'OPENING WHATSAPP...';
-    trackConversion('form');
+    btn.textContent = 'SENT ✓';
     window.open('https://wa.me/6597532059?text=' + encodeURIComponent(text), '_blank');
     document.getElementById('form-success').classList.add('show');
-    setTimeout(() => { btn.disabled = false; btn.textContent = 'SEND VIA WHATSAPP'; }, 4000);
   }
 
   /* ── Conversion tracking ── */
