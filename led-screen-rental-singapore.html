@@ -493,15 +493,15 @@
       var service = document.getElementById('qf-service').value;
       var details = document.getElementById('qf-details').value.trim();
 
-      // The Sheet script only keeps name/phone/service/details/page/time,
-      // so email + company go inside "details" to make sure they're kept.
+      // Email + company are sent as their own fields (Sheet columns G/H) AND
+      // copied into "details", so they're kept whichever version of the script is live.
       var fullDetails = [
         company ? 'Company: ' + company : '',
         email ? 'Email: ' + email : '',
         details
       ].filter(Boolean).join(' | ');
       var payload = {
-        name: name, phone: phone,
+        name: name, phone: phone, email: email, company: company,
         service: service, details: fullDetails,
         page: window.location.href, time: new Date().toISOString()
       };

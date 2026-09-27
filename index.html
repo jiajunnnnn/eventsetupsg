@@ -1474,14 +1474,14 @@
     formSent = true;
 
     // 1. Save the lead to the Google Sheet (+ email to the team).
-    //    The Sheet script only keeps name/phone/service/details/page/time,
-    //    so the email address goes inside "details" to make sure it's kept.
+    //    Email is sent as its own field (Sheet column G) AND copied into
+    //    "details", so it's kept whichever version of the script is live.
     const details = [
       email.value.trim() ? 'Email: ' + email.value.trim() : '',
       msg.value.trim()
     ].filter(Boolean).join(' | ');
     const payload = {
-      name: name.value.trim(), phone: phone.value.trim(),
+      name: name.value.trim(), phone: phone.value.trim(), email: email.value.trim(),
       service: service.value, details: details,
       page: window.location.href, time: new Date().toISOString()
     };
