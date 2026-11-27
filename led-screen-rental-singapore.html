@@ -38,7 +38,7 @@
       "@type": "Service",
       "name": "LED Screen Rental Singapore",
       "serviceType": "LED Screen & Display Rental",
-      "description": "LED screen, LED bar and LED display rental in Singapore for events, roadshows, brand activations and product launches. Delivery, setup and teardown included. Serving major brands including Monster Energy, Pernod Ricard and APB Singapore.",
+      "description": "LED screen, LED bar and LED display rental in Singapore for events, roadshows, brand activations and product launches. Delivery, setup and teardown included. Serving major brands including Tiger Balm, Redoxon, Glenlivet, Monster Energy, Pernod Ricard and APB Singapore.",
       "provider": {
         "@type": "LocalBusiness",
         "name": "EventSetupSG",
@@ -164,6 +164,10 @@
     .video-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 2rem; }
     .video-item { position: relative; border-radius: 10px; overflow: hidden; aspect-ratio: 16/9; background: #111; }
     .video-item video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .video-item.tall { aspect-ratio: 4/3; }
+    .video-item.tall video { object-fit: contain; position: relative; z-index: 1; }
+    .video-item .vid-backdrop { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: blur(18px) brightness(.55); transform: scale(1.3); }
+    .video-item img.vid-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
     .video-item .vid-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 0.8rem 1rem; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); font-family: 'Montserrat', sans-serif; font-size: 0.72rem; font-weight: 700; color: #fff; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0; transition: opacity 0.25s; }
     .video-item:hover .vid-label { opacity: 1; }
     @media (max-width: 768px) { .video-showcase { padding: 3rem 1.5rem; } .video-grid { grid-template-columns: 1fr; } }
@@ -219,6 +223,38 @@
     ]
   }
   </script>
+
+<script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "name": "Redoxon curved LED counter — mall roadshow, Singapore",
+      "description": "A curved LED counter built for a Redoxon mall roadshow in Singapore, playing brand content on a wraparound LED screen.",
+      "thumbnailUrl": "https://www.eventsetupsg.com/assets/images/job-redoxon-counter-poster.jpg",
+      "uploadDate": "2026-11-27",
+      "contentUrl": "https://www.eventsetupsg.com/assets/videos/job-redoxon-counter.mp4"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "name": "Glenlivet LED counter — night activation outside Jade Phoenix, Singapore",
+      "description": "An illuminated LED counter installed for Glenlivet at a night street activation outside Jade Phoenix in Singapore.",
+      "thumbnailUrl": "https://www.eventsetupsg.com/assets/images/job-glenlivet-counter-poster.jpg",
+      "uploadDate": "2026-11-27",
+      "contentUrl": "https://www.eventsetupsg.com/assets/videos/job-glenlivet-counter.mp4"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "name": "Curved LED counter at Unity pharmacy — in-store brand activation, Singapore",
+      "description": "A curved LED counter inside a Unity pharmacy store in Singapore, playing brand video at the shelf edge.",
+      "thumbnailUrl": "https://www.eventsetupsg.com/assets/images/job-unity-counter-poster.jpg",
+      "uploadDate": "2026-11-27",
+      "contentUrl": "https://www.eventsetupsg.com/assets/videos/job-unity-counter.mp4"
+    }
+  ]
+</script>
 </head>
 <body>
 
@@ -344,6 +380,33 @@
       </video>
       <div class="vid-label">Counter LED Setup</div>
     </div>
+<div class="video-item">
+      <video class="lazy-vid" muted loop playsinline preload="none" poster="assets/images/job-glenlivet-counter-poster.jpg">
+        <source src="assets/videos/job-glenlivet-counter.mp4" type="video/mp4">
+      </video>
+      <div class="vid-label">Glenlivet LED Counter — Night Activation</div>
+    </div>
+    <div class="video-item tall">
+      <img class="vid-backdrop" src="assets/images/job-redoxon-counter-poster.jpg" alt="" aria-hidden="true">
+      <video class="lazy-vid" muted loop playsinline preload="none" poster="assets/images/job-redoxon-counter-poster.jpg">
+        <source src="assets/videos/job-redoxon-counter.mp4" type="video/mp4">
+      </video>
+      <div class="vid-label">Redoxon Curved LED Counter — Mall Roadshow</div>
+    </div>
+    <div class="video-item">
+      <video class="lazy-vid" muted loop playsinline preload="none" poster="assets/images/job-unity-counter-poster.jpg">
+        <source src="assets/videos/job-unity-counter.mp4" type="video/mp4">
+      </video>
+      <div class="vid-label">Curved LED Counter — Unity Pharmacy</div>
+    </div>
+    <div class="video-item tall">
+      <img class="vid-photo" src="assets/images/job-redoxon-totem.jpg" alt="Redoxon LED totem in a mall atrium" loading="lazy">
+      <div class="vid-label">Redoxon LED Totem — Mall Atrium</div>
+    </div>
+  </div>
+  <div style="margin-top:1.5rem; display:flex; gap:0.85rem; flex-wrap:wrap; align-items:center;">
+    <a href="https://wa.me/6597532059?text=Hi%2C%20I%27d%20like%20an%20LED%20setup%20like%20the%20ones%20above." class="btn-y" target="_blank" rel="noopener">Get a setup like this →</a>
+    <a href="/#contact" class="btn-y" style="background:transparent; color:var(--yellow); border:2px solid var(--yellow);">Get a quote</a>
   </div>
 </section>
 
